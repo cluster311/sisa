@@ -7,6 +7,14 @@ Más info: https://sisa.msal.gov.ar/sisadoc/docs/0204/puco_ws_131.jsp
 
 ### Uso
 
+Instalación
+
+```
+pip install sisa
+```
+
+Ejemplo
+
 ```python
 from sisa.apis.puco import Puco
 from sisa.apis import settings
