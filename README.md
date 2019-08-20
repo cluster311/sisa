@@ -8,10 +8,32 @@ Más info: https://sisa.msal.gov.ar/sisadoc/docs/0204/puco_ws_131.jsp
 ### Uso
 
 ```python
-from sisa.puco import PUCO
+from sisa.apis.puco import Puco
+from sisa.apis import settings
+settings.USER_SISA = 'xxxxxx'
+settings.PASS_SISA = 'xxxxxxxxxx'
 
-puco = PUCO(dni='26453653')
+puco = Puco(dni='26453653')
 resp = puco.get_info_ciudadano()
 print(resp)
 
+{
+    'ok': True, 
+    'persona_encontrada': True, 
+    'nombre_obra_social': 'O.S.P. CORDOBA (APROSS)', 
+    'nombre_persona': 'VAZQUEZ FLEXES ANDRES', 
+    'id_obra_social': '904001', 
+    'tipo_doc': 'DNI',
+
+# otros detalles
+    'raw': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><pucoResponse><resultado>OK</resultado><puco><coberturaSocial>O.S.P. CORDOBA (APROSS)</coberturaSocial><denominacion>VAZQUEZ FLEXES ANDRES</denominacion><nrodoc>26453653</nrodoc><rnos>904001</rnos><tipodoc>DNI</tipodoc></puco></pucoResponse>', 
+    'all_fields': {
+        'resultado': 'OK', 
+        'puco': None, 
+        'puco__coberturaSocial': 'O.S.P. CORDOBA (APROSS)', 
+        'puco__denominacion': 'VAZQUEZ FLEXES ANDRES', 
+        'puco__nrodoc': '26453653', 
+        'puco__rnos': '904001', 
+        'puco__tipodoc': 'DNI'}, 
+}
 ```

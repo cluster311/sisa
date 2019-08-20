@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
      name='sisa',  
-     version='0.04',
+     version='0.105',
      license='MIT',
      scripts=['sisa_cli'],
      author="Andres Vazquez",

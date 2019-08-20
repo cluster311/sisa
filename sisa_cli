@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-
-from sisa.puco import PUCO
-from sisa.settings import USER_SISA, PASS_SISA
+from __future__ import print_function
+from sisa.apis.puco import Puco
+from sisa.apis import settings
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -11,7 +11,7 @@ parser.add_argument("--password", type=str, help="Clave SISA válida")
 
 args = parser.parse_args()
 
-USER_SISA = args.user
-PASS_SISA = args.password
-puco = PUCO(dni=args.dni)
+settings.USER_SISA = args.user
+settings.PASS_SISA = args.password
+puco = Puco(dni=args.dni)
 print(puco.get_info_ciudadano())
