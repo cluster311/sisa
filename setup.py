@@ -3,17 +3,20 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+REQUIREMENTS = [i.strip() for i in open("requirements.txt").readlines()]
+
 setuptools.setup(
      name='sisa',  
-     version='0.105',
+     version='0.107',
      license='MIT',
-     scripts=['sisa_cli'],
+     # no requerido scripts=['sisa_cli'],
      author="Andres Vazquez",
      author_email="andres@data99.com.ar",
      description="SISA APIs tools",
      long_description=long_description,
      long_description_content_type="text/markdown",
      url="https://github.com/cluster311/sisa",
+     install_requires=REQUIREMENTS,
      packages=setuptools.find_packages(),
      classifiers=[
          'Programming Language :: Python :: 3',

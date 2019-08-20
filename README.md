@@ -15,7 +15,25 @@ settings.PASS_SISA = 'xxxxxxxxxx'
 
 puco = Puco(dni='26453653')
 resp = puco.get_info_ciudadano()
+if resp['ok']:
+    if resp['persona_encontrada']:
+        print('Encontrado: {}. Obra social {} (RNOS:{})'.format(resp['nombre_persona'],
+                                                                resp['nombre_obra_social'],
+                                                                resp['id_obra_social']))
+
+
+print('------------------')
+print('Respuesta completa')
 print(resp)
+print('------------------')
+```
+Resultado:
+
+```
+Encontrado: VAZQUEZ FLEXES ANDRES. Obra social O.S.P. CORDOBA (APROSS) (RNOS:904001)
+
+------------------
+Respuesta completa
 
 {
     'ok': True, 
@@ -36,4 +54,5 @@ print(resp)
         'puco__rnos': '904001', 
         'puco__tipodoc': 'DNI'}, 
 }
+------------------
 ```
