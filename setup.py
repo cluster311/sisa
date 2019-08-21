@@ -3,8 +3,6 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-REQUIREMENTS = [i.strip() for i in open("requirements.txt").readlines()]
-
 setuptools.setup(
      name='sisa',  
      version='0.107',
@@ -16,7 +14,9 @@ setuptools.setup(
      long_description=long_description,
      long_description_content_type="text/markdown",
      url="https://github.com/cluster311/sisa",
-     install_requires=REQUIREMENTS,
+     install_requires=[
+        'requests==2.22.0',
+     ],
      packages=setuptools.find_packages(),
      classifiers=[
          'Programming Language :: Python :: 3',
