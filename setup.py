@@ -15,7 +15,7 @@ setuptools.setup(
      long_description_content_type="text/markdown",
      url="https://github.com/cluster311/sisa",
      install_requires=[
-        'requests==2.22.0',
+        'requests',
      ],
      packages=setuptools.find_packages(),
      classifiers=[
