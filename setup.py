@@ -4,10 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-     name='sisa',  
-     version='0.107',
+     name='sisa',
+     version='0.907',
      license='MIT',
-     # no requerido scripts=['sisa_cli'],
+     entry_points={
+        'console_scripts': [
+            'sisa_puco=sisa.puco_cli:main'
+            ],
+        },
      author="Andres Vazquez",
      author_email="andres@data99.com.ar",
      description="SISA APIs tools",
@@ -15,8 +19,9 @@ setuptools.setup(
      long_description_content_type="text/markdown",
      url="https://github.com/cluster311/sisa",
      install_requires=[
-        'requests',
+        'requests>2',
      ],
+     # package_dir={'': 'src'},
      packages=setuptools.find_packages(),
      classifiers=[
          'Programming Language :: Python :: 3',
@@ -25,4 +30,5 @@ setuptools.setup(
          'Operating System :: OS Independent',
          'Intended Audience :: Developers', 
      ],
+     python_requires='>=3.6',
  )

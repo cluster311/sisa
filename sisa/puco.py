@@ -2,7 +2,7 @@
 Padrón Unico Consolidado Operativo (PUCO)
 https://sisa.msal.gov.ar/sisadoc/docs/0204/puco_ws_131.jsp
 """
-from sisa.apis import settings
+from sisa import settings
 import requests
 import xml.etree.ElementTree as ET
 import json
@@ -10,13 +10,28 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Puco():
+class Puco:
     """
     Obtener información de la Obra Social registrada de un ciudadano argentino
     """
+    SERVICE_URL = 'https://sisa.msal.gov.ar/sisa/services/rest/puco/{dni}'
+
+    # campos de respuesta 
+    dni = None
+    cobertura_social = None  # algo como O.S.P. CORDOBA (APROSS)
+    denominacion = None  # Nombre completo de la persona
+    rnos = None  # código único de la obra social
+    tipo_doc = None  # tipo de documento, en general "DNI"
+    extra_fields = {}  # campos nuevos que podrían venir en el futuro
+    raw_response = None
+    status_response = None
+    last_error = None
 
     def __init__(self, dni):
         self.dni = dni
+    
+    def __str__(self):
+        return f'{self.denominacion} DNI: {self.dni}. Obra social: [{self.rnos}] {self.cobertura_social}'
 
     def get_info_ciudadano(self):
         """ obtener la cobertura de un ciudadano argentino
@@ -36,7 +51,7 @@ class Puco():
         logger.info(f'Getting PUCO info ciudadano {self.dni}')
         respuesta = {}
 
-        url = settings.URL_API_REST_PUCO.format(dni=self.dni)
+        url = self.SERVICE_URL.format(dni=self.dni)
         params = {"usuario": settings.USER_SISA, "clave": settings.PASS_SISA}
         data_str = json.dumps(params)
         
@@ -44,28 +59,27 @@ class Puco():
         headers = {"Content-Type": "application/json; charset=utf-8"}  
 
         try:
-            response = requests.post(url, data=data_str, headers=headers, verify=settings.VERIFY_SSL_SISA)
+            response = requests.post(url, data=data_str, headers=headers)
         except Exception as e:
-            error = 'Error POST PUCO (status: {}) {}. Contenido {}'.format(response.status_code, e, response.content)
-            logger.error(error)
+            self.raw_response = response.content
+            self.status_response = response.status_code
+            self.last_error = f'Error POST PUCO: {e}'
+            logger.error('{} status:{}'.fomrat(self.last_error, self.status_response))
             respuesta['ok'] = False
-            respuesta['error'] = error
             return respuesta
         
+        self.status_response = response.status_code
+        self.raw_response = response.content
         logger.info('respuesta de PUCO: {} {}'.format(response.status_code, response.content))
 
         encode_to = 'utf-8'
         data = response.content.decode(encode_to)
         xmldata = ET.fromstring(data)
 
-        respuesta['raw'] = data
-        respuesta['all_fields'] = {}
         for child in xmldata:
 
             campo = child.tag.strip()
             valor = None if child.text is None else child.text.strip()
-            # por las dudas grabo todo
-            respuesta['all_fields'][campo] = valor
             
             if campo == 'resultado':
                 if valor == 'OK':  # REGISTRO_NO_ENCONTRADO
@@ -77,28 +91,33 @@ class Puco():
                     respuesta['persona_encontrada'] = False
                 elif valor == 'ERROR_AUTENTICACION':
                     respuesta['ok'] = False
-                    respuesta['error'] = f'Error de autentificacion, revise sus credenciales: {params}'
+                    self.last_error = f'Error de autentificacion, revise sus credenciales'
+                    logger.error(self.last_error)
                 else:
                     respuesta['ok'] = False
-                    respuesta['error'] = f'Respuesta no reconocida: {valor}'
-                    logger.error(f'Respuesta PUCO no reconocida {valor}')
-
-            if campo == 'puco':  # ingresar
+                    self.last_error = f'Respuesta no reconocida: {valor}'
+                    logger.error(self.last_error)
+            elif campo == 'puco':  # ingresar a los detalles
                 for detalle in child:
-                    campo_detalle = detalle.tag.strip() 
+                    campo_detalle = detalle.tag.strip()
                     valor = None if detalle.text is None else detalle.text.strip()
-                    respuesta['all_fields'][f'puco__{campo_detalle}'] = valor
                     
                     if campo_detalle == 'coberturaSocial':
-                        respuesta['nombre_obra_social'] = valor  # nombre de la oss # ej: O.S.P. CORDOBA (APROSS)
+                        self.cobertura_social = valor  # nombre de la oss # ej: O.S.P. CORDOBA (APROSS)
                     elif campo_detalle == 'denominacion':  # nombre + apellido de la persona
-                        respuesta['nombre_persona'] = valor
+                        self.denominacion = valor
                     elif campo_detalle == 'nrodoc':  # nro a secas del DNI
                         pass  # es el mismo que le pase como parámetro
                     elif campo_detalle == 'rnos':  # ID de la obra social. Ej 904001
-                        respuesta['id_obra_social'] = valor
+                        self.rnos = valor
                     elif campo_detalle == 'tipodoc':  # ex DNI
-                        respuesta['tipo_doc'] = valor
+                        self.tipo_doc = valor
+                    else:
+                        if 'puco' not in self.extra_fields:
+                            self.extra_fields['puco'] = {}
+                        self.extra_fields['puco'][campo_detalle] = valor
+            else:
+                self.extra_fields[campo] = valor
 
         logger.info(f'Respuesta PUCO: {respuesta}')
         return respuesta
