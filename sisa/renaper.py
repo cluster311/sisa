@@ -46,6 +46,9 @@ class Renaper:
     fecha_fallecido = None
     donante = None
     coberturas = []  # coberturas de salud
+    codigo_bahra_provincia = None
+    codigo_bahra_departamento = None
+    codigo_bahra_localidad = None
     
     # mis extras
     extra_fields = {}  # campos nuevos que podrían venir en el futuro
@@ -183,7 +186,7 @@ class Renaper:
                 self.dni = valor
             elif campo == 'identificadoRenaper':
                 self.codigo_renaper = valor
-            elif campo == 'padronSISA':
+            elif campo == 'PadronSISA':
                 self.padron_sisa = valor
             elif campo == 'tipoDocumento':
                 self.tipo_doc = valor
@@ -231,6 +234,12 @@ class Renaper:
                 self.donante = valor  # Ej NULL
             elif campo == 'cobertura':
                 self.__procesar_cobertura(child)
+            elif campo == 'codigoBahraProvincia':  # nombre + apellido de la persona
+                self.codigo_bahra_provincia = valor  # Ej NULL
+            elif campo == 'codigoBahraDepartamento':  # nombre + apellido de la persona
+                self.codigo_bahra_departamento = valor  # Ej NULL
+            elif campo == 'codigoBahraLocalidad':  # nombre + apellido de la persona
+                self.codigo_bahra_localidad = valor  # Ej NULL
             else:
                 self.extra_fields[campo] = valor
                 logger.error(f'Campo no esperado {campo} = {valor}')
