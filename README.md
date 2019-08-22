@@ -21,7 +21,7 @@ export USER_SISA='my-sisa-user'
 export PASS_SISA='my-sisa-pass'
 ```
 
-#### Ejemplo
+#### Ejemplo en python
 
 ```python
 
@@ -57,5 +57,12 @@ Respuesta completa
 Status: 200
 b'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><pucoResponse><resultado>OK</resultado><puco><coberturaSocial>O.S.P. CORDOBA (APROSS)</coberturaSocial><denominacion>VAZQUEZ FLEXES ANDRES</denominacion><nrodoc>26453653</nrodoc><rnos>904001</rnos><tipodoc>DNI</tipodoc></puco></pucoResponse>'
 ------------------
+```
 
+#### Ejemplo en consola
+
+```
+sisa_puco --dni 25411233
+
+{'dni': '25411233', 'status_response': 200, 'raw_response': b'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><pucoResponse><resultado>OK</resultado><puco><coberturaSocial>OBRA SOCIAL DEL PERSONAL ASOCIADO A ASOCIACION MUTUAL SANCOR</coberturaSocial><denominacion>PASTRANA GABRIEL FEDERICO</denominacion><nrodoc>25411233</nrodoc><rnos>3009</rnos><tipodoc>DNI</tipodoc></puco></pucoResponse>', 'cobertura_social': 'OBRA SOCIAL DEL PERSONAL ASOCIADO A ASOCIACION MUTUAL SANCOR', 'denominacion': 'PEREZ JUAN CARLOS', 'rnos': '3009', 'tipo_doc': 'DNI'}
 ```
