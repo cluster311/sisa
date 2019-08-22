@@ -22,6 +22,8 @@ class Puco:
     denominacion = None  # Nombre completo de la persona
     rnos = None  # código único de la obra social
     tipo_doc = None  # tipo de documento, en general "DNI"
+    
+    # mis extras
     extra_fields = {}  # campos nuevos que podrían venir en el futuro
     raw_response = None
     status_response = None
@@ -91,7 +93,27 @@ class Puco:
                     respuesta['persona_encontrada'] = False
                 elif valor == 'ERROR_AUTENTICACION':
                     respuesta['ok'] = False
-                    self.last_error = f'Error de autentificacion, revise sus credenciales'
+                    self.last_error = 'Error de autentificacion, revise sus credenciales'
+                    logger.error(self.last_error)
+                elif valor == 'ERROR_INESPERADO':
+                    respuesta['ok'] = False
+                    self.last_error = 'La llamada no es correcta o hay otro problema.'
+                    logger.error(self.last_error)
+                elif valor == 'NO_TIENE_QUOTA_DISPONIBLE':
+                    respuesta['ok'] = False
+                    self.last_error = 'No tiene cuota de uso asignada'
+                    logger.error(self.last_error)
+                elif valor == 'ERROR_DATOS':
+                    respuesta['ok'] = False
+                    self.last_error = 'La llamada no es correcta o hay otro problema.'
+                    logger.error(self.last_error)
+                elif valor == 'MULTIPLE_RESULTADO':
+                    respuesta['ok'] = False
+                    self.last_error = 'Se ha encontrado más de un resultado.'
+                    logger.error(self.last_error)
+                elif valor == 'LIMITE_EXCEDIDO':
+                    respuesta['ok'] = False
+                    self.last_error = 'Se ha excedido la cantidad de resultados.'
                     logger.error(self.last_error)
                 else:
                     respuesta['ok'] = False
