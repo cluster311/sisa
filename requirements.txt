@@ -1,1 +1,2 @@
 requests>2
+oss_ar>=0.130  # with info about OSS

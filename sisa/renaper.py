@@ -5,6 +5,7 @@ https://sisa.msal.gov.ar/sisadoc/docs/0204/puco_ws_131.jsp
 from sisa import settings
 import requests
 import xml.etree.ElementTree as ET
+from oss_ar.oss import ObraSocialArgentina
 import json
 import logging
 logger = logging.getLogger(__name__)
@@ -30,6 +31,7 @@ class Renaper:
     fecha_nacimiento = None
     cobertura_social = None  # algo como O.S.P. CORDOBA (APROSS)
     rnos = None  # código único de la obra social
+    oss = None  # datos de la obra social de librería externa
     provincia = None
     departamento = None
     localidad = None
@@ -249,7 +251,11 @@ class Renaper:
         for cobertura in self.coberturas:
             self.cobertura_social = cobertura['nombreObraSocial']
             self.rnos = cobertura['rnos']
-            
+            # agregar info oficial de la obra social
+            if self.rnos is not None:
+                oss = ObraSocialArgentina(rnos=self.rnos)
+                self.oss = oss.as_dict()
+
         logger.info(f'Respuesta RENAPER: {respuesta}')
         return respuesta
     
@@ -268,7 +274,6 @@ class Renaper:
         for detalle in cobertura_xml:
             campo = detalle.tag.strip()
             valor = None if detalle.text is None else detalle.text.strip()
-
             cobertura[campo] = valor
 
         self.coberturas.append(cobertura)

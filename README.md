@@ -18,6 +18,11 @@ export USER_SISA='my-sisa-user'
 export PASS_SISA='my-sisa-pass'
 ```
 
+## Obras sociales
+
+Si la obra social existe entonces se devuelven datos adicionales de ella a través de la librería [oss-ar](https://pypi.org/project/oss-ar/).  
+
+
 ## APIs
 
 ### Padrón Unico Consolidado Operativo (PUCO)
@@ -34,7 +39,8 @@ resp = puco.get_info_ciudadano()
 if resp['ok']:
     if resp['persona_encontrada']:
         print(f'''Encontrado: {puco.dni} ({puco.tipo_doc}) {puco.denominacion}
-                [{puco.rnos}] {puco.cobertura_social}''')
+                [{puco.rnos}] {puco.cobertura_social}
+                OSS: {puco.oss}''')
         
     else:
         print(f'Persona no encontrada: {puco.last_error}')
@@ -54,6 +60,8 @@ print('------------------')
 ```
 Encontrado: 26453653 (DNI) VAZQUEZ FLEXES ANDRES
                 [904001] O.S.P. CORDOBA (APROSS)
+                OSS: {'rnos': '904001', 'exists': True, 'nombre': 'O.S.P. CORDOBA (APROSS)', 'tipo_de_cobertura': 'Obra social', 'sigla': 'APROSS', 'provincia': 'Córdoba', 'localidad': '', 'domicilio': 'Sin especificar', 'cp': '', 'telefonos': [], 'emails': [], 'web': None}
+
 ------------------
 Respuesta completa
 Status: 200
@@ -84,7 +92,8 @@ resp = rena.get_info_ciudadano()
 if resp['ok']:
     if resp['persona_encontrada']:
         print(f'''Encontrado: {rena.dni} ({rena.tipo_doc}) {rena.nombre} {rena.apellido}
-                [{rena.rnos}] {rena.cobertura_social}''')
+                [{rena.rnos}] {rena.cobertura_social}
+                OSS: {rena.oss}''')
         
     else:
         print(f'Persona no encontrada: {rena.last_error}')
@@ -105,6 +114,8 @@ print('------------------')
 ```
 Encontrado: 26153653 (DNI) JUAN PEREZ
                 [904001] O.S.P. CORDOBA (APROSS)
+                OSS: {'rnos': '904001', 'exists': True, 'nombre': 'O.S.P. CORDOBA (APROSS)', 'tipo_de_cobertura': 'Obra social', 'sigla': 'APROSS', 'provincia': 'Córdoba', 'localidad': '', 'domicilio': 'Sin especificar', 'cp': '', 'telefonos': [], 'emails': [], 'web': None}
+
 ------------------
 Respuesta completa
 Status: 200

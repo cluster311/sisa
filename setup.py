@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
      name='sisa',
-     version='0.914',
+     version='0.917',
      license='MIT',
      entry_points={
         'console_scripts': [
@@ -20,6 +20,7 @@ setuptools.setup(
      url="https://github.com/cluster311/sisa",
      install_requires=[
         'requests>2',
+        'oss_ar>=0.130'
      ],
      # package_dir={'': 'src'},
      packages=setuptools.find_packages(),

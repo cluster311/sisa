@@ -6,6 +6,7 @@ from sisa import settings
 import requests
 import xml.etree.ElementTree as ET
 import json
+from oss_ar.oss import ObraSocialArgentina
 import logging
 logger = logging.getLogger(__name__)
 
@@ -21,6 +22,7 @@ class Puco:
     cobertura_social = None  # algo como O.S.P. CORDOBA (APROSS)
     denominacion = None  # Nombre completo de la persona
     rnos = None  # código único de la obra social
+    oss = None  # datos de la obra social de librería externa
     tipo_doc = None  # tipo de documento, en general "DNI"
     
     # mis extras
@@ -142,4 +144,10 @@ class Puco:
                 self.extra_fields[campo] = valor
 
         logger.info(f'Respuesta PUCO: {respuesta}')
+
+        # agregar info oficial de la obra social
+        if self.rnos is not None:
+            oss = ObraSocialArgentina(rnos=self.rnos)
+            self.oss = oss.as_dict()
+
         return respuesta
