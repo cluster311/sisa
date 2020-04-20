@@ -58,10 +58,10 @@ class Puco:
         respuesta = {}
         if settings.USER_SISA == 'test' and settings.PASS_SISA == 'test':
             respuesta['ok'] = True
-            respuesta['persona_encontrada'] = sample([False, True, True], k=1)
+            respuesta['persona_encontrada'] = sample([False, True, True], k=1)[0]
             self.cobertura_social = 'O.S.P. CORDOBA (APROSS)'
-            self.denominacion = sample(['Marta Gonzalez', 'Raul Rodriguez', 'Gerardo Martinez'], k=1)
-            self.rnos = sample(['904001', '256349', '369584'], k=1)
+            self.denominacion = sample(['Marta Gonzalez', 'Raul Rodriguez', 'Gerardo Martinez'], k=1)[0]
+            self.rnos = sample(['904001', '256349', '369584'], k=1)[0]
             self.tipo_doc = 'DNI'
             return respuesta
         url = self.SERVICE_URL.format(dni=self.dni)
