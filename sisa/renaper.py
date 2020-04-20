@@ -2,6 +2,8 @@
 Padrón Unico Consolidado Operativo (PUCO)
 https://sisa.msal.gov.ar/sisadoc/docs/0204/puco_ws_131.jsp
 """
+from random import sample
+
 from sisa import settings
 import requests
 import xml.etree.ElementTree as ET
@@ -101,7 +103,30 @@ class Renaper:
         """
         logger.info(f'Getting PUCO info ciudadano {self.dni}')
         respuesta = {}
-
+        if settings.USER_SISA == 'test' and settings.PASS_SISA == 'test':
+            respuesta['ok'] = True
+            respuesta['persona_encontrada'] = sample([False, True, True], k=1)[0]
+            self.codigo_sisa = '4400000533'
+            self.codigo_renaper = '24432867'
+            self.tipo_doc = 'DNI'
+            self.apellido = sample(['Martinez', 'Garcia', 'Rodriguez'], k=1)[0]
+            self.nombre = sample(['Margarita', 'Roberto', 'Fernando'], k=1)[0]
+            self.sexo = sample(['F', 'M'], k=1)[0]
+            self.fecha_nacimiento = sample(['26-05-1986 00:00', '12-03-1964 00:00', '23-10-1994 00:00'], k=1)[0]
+            self.estado_civil = sample(['Casado/a', 'Soltero/a'], k=1)[0]
+            self.tipo_cobertura_vigente = 'Obra Social'
+            self.cobertura_social = sample(['OBRA SOCIAL DE LA UNION OBRERA METALURGICA DE LA REPUBLICA ARGENTINA', 'O.S.P. CORDOBA (APROSS)'], k=1)[0]
+            self.rnos = sample(['112103', '999999'], k=1)[0]
+            self.provincia = 'Buenos Aires'
+            self.departamento = 'Lomas de Zamora'
+            self.localidad = 'Temperley'
+            self.domicilio = 'ORURO 640'
+            self.codigo_postal = 1834
+            self.pais_nacimiento = 'Argentina'
+            self.nacionalidad = 'Argentina'
+            self.fallecido = 'NO'
+            self.cobertura_social = ''
+            return respuesta
         url = self.SERVICE_URL.format(dni=self.dni)
         params = {'usuario': settings.USER_SISA,
                   'clave': settings.PASS_SISA,
