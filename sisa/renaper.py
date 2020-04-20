@@ -112,7 +112,7 @@ class Renaper:
             self.apellido = sample(['Martinez', 'Garcia', 'Rodriguez'], k=1)[0]
             self.nombre = sample(['Margarita', 'Roberto', 'Fernando'], k=1)[0]
             self.sexo = sample(['F', 'M'], k=1)[0]
-            self.fecha_nacimiento = sample(['26-05-1986 00:011', '12-03-1964 00:011', '23-10-1994 00:011'], k=1)[0]
+            self.fecha_nacimiento = sample(['26-05-1986 00:00', '12-03-1964 00:00', '23-10-1994 00:00'], k=1)[0]
             self.estado_civil = sample(['Casado/a', 'Soltero/a'], k=1)[0]
             self.tipo_cobertura_vigente = 'Obra Social'
             self.cobertura_social = sample(['OBRA SOCIAL DE LA UNION OBRERA METALURGICA DE LA REPUBLICA ARGENTINA', 'O.S.P. CORDOBA (APROSS)'], k=1)[0]
