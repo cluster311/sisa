@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/cluster311/sisa.svg?branch=master)](https://travis-ci.org/cluster311/sisa)
+
 # SISA
 Conexión a las APIs de SISA (Sistema Integrado de Información Sanitario Argentino).  
 Más info de las APIs de SISA: https://sisa.msal.gov.ar/sisadoc/docs/0203/ws_sisa.jsp  
@@ -9,6 +11,8 @@ Instalación
 ```
 pip install sisa
 ```
+[automated deploy [with travis](https://github.com/cluster311/sisa/blob/master/.travis.yml#L18-L24)]
+
 
 #### Credenciales requeridas
 Definir las variables de entorno _USER_SISA_ y _PASS_SISA_ con los valores recibidos por SISA. 
@@ -126,5 +130,29 @@ b'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Ciudadano><resultado>O
 ## Tests
 
 ```
-python -m pytest
+$ python -m pytest
+
+============================================== test session starts ==============================================
+platform linux -- Python 3.6.9, pytest-5.4.1, py-1.8.1, pluggy-0.13.1
+rootdir: /home/hudson/dev/cluster311/sisa
+collected 2 items                                                                                               
+
+tests/test_base_puco.py 1 No encontrada
+2 OK PUCO Marta Gonzalez DNI: 11111111. Obra social: [256349] O.S.P. CORDOBA (APROSS)
+3 No encontrada
+4 OK PUCO Marta Gonzalez DNI: 11111111. Obra social: [256349] O.S.P. CORDOBA (APROSS)
+5 OK PUCO Marta Gonzalez DNI: 11111111. Obra social: [904001] TEST OSS
+6 OK PUCO Gerardo Martinez DNI: 11111111. Obra social: [369584] O.S.P. CORDOBA (APROSS)
+7 OK PUCO Marta Gonzalez DNI: 11111111. Obra social: [256349] TEST OSS
+.
+tests/test_base_renaper.py 1 OK PUCO Margarita Martinez DNI: 111111111.
+2 OK PUCO Roberto Martinez DNI: 111111111.
+3 No encontrada
+4 No encontrada
+5 OK PUCO Margarita Rodriguez DNI: 111111111.
+6 No encontrada
+7 No encontrada
+.
+
+=============================================== 2 passed in 0.11s ===============================================
 ```
