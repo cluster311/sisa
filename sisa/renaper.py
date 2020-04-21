@@ -106,26 +106,25 @@ class Renaper:
         if settings.USER_SISA == 'test' and settings.PASS_SISA == 'test':
             respuesta['ok'] = True
             respuesta['persona_encontrada'] = sample([False, True, True], k=1)[0]
-            self.codigo_sisa = '4400000533'
-            self.codigo_renaper = '24432867'
-            self.tipo_doc = 'DNI'
-            self.apellido = sample(['Martinez', 'Garcia', 'Rodriguez'], k=1)[0]
-            self.nombre = sample(['Margarita', 'Roberto', 'Fernando'], k=1)[0]
-            self.sexo = sample(['F', 'M'], k=1)[0]
-            self.fecha_nacimiento = sample(['26-05-1986 00:00', '12-03-1964 00:00', '23-10-1994 00:00'], k=1)[0]
-            self.estado_civil = sample(['Casado/a', 'Soltero/a'], k=1)[0]
-            self.tipo_cobertura_vigente = 'Obra Social'
-            self.cobertura_social = sample(['OBRA SOCIAL DE LA UNION OBRERA METALURGICA DE LA REPUBLICA ARGENTINA', 'O.S.P. CORDOBA (APROSS)'], k=1)[0]
-            self.rnos = sample(['112103', '999999'], k=1)[0]
-            self.provincia = 'Buenos Aires'
-            self.departamento = 'Lomas de Zamora'
-            self.localidad = 'Temperley'
-            self.domicilio = 'ORURO 640'
-            self.codigo_postal = 1834
-            self.pais_nacimiento = 'Argentina'
-            self.nacionalidad = 'Argentina'
-            self.fallecido = 'NO'
-            self.cobertura_social = ''
+            self.codigo_sisa = sample(settings.test_data['renaper']['codigo_sisa'], k=1)[0]
+            self.codigo_renaper = sample(settings.test_data['renaper']['codigo_renaper'], k=1)[0]
+            self.tipo_doc = sample(settings.test_data['renaper']['tipo_doc'], k=1)[0]
+            self.apellido = sample(settings.test_data['renaper']['apellido'], k=1)[0]
+            self.nombre = sample(settings.test_data['renaper']['nombre'], k=1)[0]
+            self.sexo = sample(settings.test_data['renaper']['sexo'], k=1)[0]
+            self.fecha_nacimiento = sample(settings.test_data['renaper']['fecha_nacimiento'], k=1)[0]
+            self.estado_civil = sample(settings.test_data['renaper']['estado_civil'], k=1)[0]
+            self.tipo_cobertura_vigente = sample(settings.test_data['renaper']['tipo_cobertura_vigente'], k=1)[0]
+            self.cobertura_social = sample(settings.test_data['renaper']['cobertura_social'], k=1)[0]
+            self.rnos = sample(settings.test_data['renaper']['rnos'], k=1)[0]
+            self.provincia = sample(settings.test_data['renaper']['provincia'], k=1)[0]
+            self.departamento = sample(settings.test_data['renaper']['departamento'], k=1)[0]
+            self.localidad = sample(settings.test_data['renaper']['localidad'], k=1)[0]
+            self.domicilio = sample(settings.test_data['renaper']['domicilio'], k=1)[0]
+            self.codigo_postal = sample(settings.test_data['renaper']['codigo_postal'], k=1)[0]
+            self.pais_nacimiento = sample(settings.test_data['renaper']['pais_nacimiento'], k=1)[0]
+            self.nacionalidad = sample(settings.test_data['renaper']['nacionalidad'], k=1)[0]
+            self.fallecido = sample(settings.test_data['renaper']['fallecido'], k=1)[0]
             return respuesta
         url = self.SERVICE_URL.format(dni=self.dni)
         params = {'usuario': settings.USER_SISA,
@@ -177,7 +176,7 @@ class Renaper:
                     respuesta['persona_encontrada'] = False
                 elif valor == 'ERROR_AUTENTICACION':
                     respuesta['ok'] = False
-                    self.last_error = f'Error de autentificacion, revise sus credenciales'
+                    self.last_error = f'Error de autentificacion, revise sus credenciales {settings.USER_SISA} + {settings.PASS_SISA}'
                     logger.error(self.last_error)
                 elif valor == 'ERROR_INESPERADO':
                     respuesta['ok'] = False

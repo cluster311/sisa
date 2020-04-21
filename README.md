@@ -122,3 +122,9 @@ Status: 200
 b'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Ciudadano><resultado>OK</resultado><id>7051139662</id><codigoSISA>1220919305</codigoSISA><identificadoRenaper>37006105</identificadoRenaper><PadronSISA>SI</PadronSISA><tipoDocumento>DNI</tipoDocumento><nroDocumento>26153653</nroDocumento><apellido>PEREZ</apellido><nombre>JUAN</nombre><sexo>M</sexo><fechaNacimiento>07-06-1978 00:00</fechaNacimiento><estadoCivil> </estadoCivil><cobertura><fechaActualizacion>30-09-2018 20:17</fechaActualizacion><nombreObraSocial>O.S.P. CORDOBA (APROSS)</nombreObraSocial><origen>PUCO</origen><rnos>904001</rnos><tipoCobertura>Obra social</tipoCobertura><vigenciaDesde>\'\'sin dato\'\'</vigenciaDesde></cobertura><codigoBahraProvincia>14</codigoBahraProvincia><provincia>C\xc3\xb3rdoba</provincia><codigoBahraDepartamento>21</codigoBahraDepartamento><departamento>Col\xc3\xb3n</departamento><codigoBahraLocalidad>200</codigoBahraLocalidad><localidad>MENDIOLAZA</localidad><domicilio>CUATRO 16</domicilio><pisoDpto> </pisoDpto><codigoPostal>5107</codigoPostal><paisNacimiento>Argentina</paisNacimiento><provinciaNacimiento> </provinciaNacimiento><localidadNacimiento> </localidadNacimiento><nacionalidad> </nacionalidad><fallecido>NO</fallecido><fechaFallecido> </fechaFallecido><donante>NULL</donante></Ciudadano>'
 
 ```
+
+## Tests
+
+```
+python -m pytest
+```

@@ -59,10 +59,11 @@ class Puco:
         if settings.USER_SISA == 'test' and settings.PASS_SISA == 'test':
             respuesta['ok'] = True
             respuesta['persona_encontrada'] = sample([False, True, True], k=1)[0]
-            self.cobertura_social = 'O.S.P. CORDOBA (APROSS)'
-            self.denominacion = sample(['Marta Gonzalez', 'Raul Rodriguez', 'Gerardo Martinez'], k=1)[0]
-            self.rnos = sample(['904001', '256349', '369584'], k=1)[0]
-            self.tipo_doc = 'DNI'
+            self.cobertura_social = sample(settings.test_data['puco']['cobertura_social'], k=1)[0]
+            self.rnos = sample(settings.test_data['puco']['rnos'], k=1)[0]
+            self.denominacion = sample(settings.test_data['puco']['denominacion'], k=1)[0]
+            self.rnos = sample(settings.test_data['puco']['rnos'], k=1)[0]
+            self.tipo_doc = sample(settings.test_data['puco']['tipo_doc'], k=1)[0]
             return respuesta
         url = self.SERVICE_URL.format(dni=self.dni)
         params = {"usuario": settings.USER_SISA, "clave": settings.PASS_SISA}

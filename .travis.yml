@@ -1,0 +1,24 @@
+language: python
+python:
+  - 3.6
+  - 3.7
+  - 3.8
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install gdal-bin
+install:
+  - pip install -r requirements.txt
+  - pip install -r dev-requirements.txt
+  - pip install flake8
+before_script:
+  - flake8 sisa --count --select=E9,F63,F7,F82 --show-source --statistics
+  - flake8 sisa --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+script:
+  - python -m pytest -s
+deploy:
+    provider: pypi
+    username: "$PYPI_USER"
+    password: "$PYPI_PASSWORD"
+    distributions: "sdist bdist_wheel"
+    on:
+        tags: true
