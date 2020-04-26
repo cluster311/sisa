@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
      name='sisa',
-     version='0.921',
+     version='0.922',
      license='MIT',
      entry_points={
         'console_scripts': [
